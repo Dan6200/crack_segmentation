@@ -1,7 +1,9 @@
+import os
 from PIL import Image
 
 def is_grayscale(image_path):
     img = Image.open(image_path).convert('RGB')
+    img.save(image_path)
     w, h = img.size
     for i in range(w):
         for j in range(h):
