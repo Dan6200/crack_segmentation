@@ -27,7 +27,7 @@ class AverageMeter(object):
         self.avg = self.sum / self.count
 
 def cuda(x):
-    return x.cuda(async=True) if torch.cuda.is_available() else x
+    return x.cuda(non_blocking=True) if torch.cuda.is_available() else x
 
 def write_event(log, step, **data):
     data['step'] = step
@@ -59,7 +59,7 @@ def create_model(device, type ='vgg16'):
 
 def load_unet_vgg16(model_path):
     model = UNet16(pretrained=True)
-    checkpoint = torch.load(model_path)
+    checkpoint = torch.load(model_path, map_location=torch.device('cpu'))
     if 'model' in checkpoint:
         model.load_state_dict(checkpoint['model'])
     elif 'state_dict' in checkpoint:
@@ -67,7 +67,7 @@ def load_unet_vgg16(model_path):
     else:
         raise Exception('undefind model format')
 
-    model.cuda()
+    #model.cuda()
     model.eval()
 
     return model
@@ -82,7 +82,7 @@ def load_unet_resnet_101(model_path):
     else:
         raise Exception('undefind model format')
 
-    model.cuda()
+    #model.cuda()
     model.eval()
 
     return model
@@ -97,7 +97,7 @@ def load_unet_resnet_34(model_path):
     else:
         raise Exception('undefind model format')
 
-    model.cuda()
+    #model.cuda()
     model.eval()
 
     return model

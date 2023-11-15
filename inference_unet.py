@@ -21,7 +21,7 @@ def evaluate_img(model, img):
 
     img_1 = cv.resize(img, (input_width, input_height), cv.INTER_AREA)
     X = train_tfms(Image.fromarray(img_1))
-    X = Variable(X.unsqueeze(0)).cuda()  # [N, 1, H, W]
+    X = Variable(X.unsqueeze(0))#.cuda()  # [N, 1, H, W]
 
     mask = model(X)
 
@@ -58,7 +58,7 @@ def evaluate_img_patch(model, img):
     preds = []
     for i, patch in enumerate(patches):
         patch_n = train_tfms(Image.fromarray(patch))
-        X = Variable(patch_n.unsqueeze(0)).cuda()  # [N, 1, H, W]
+        X = Variable(patch_n.unsqueeze(0))#.cuda()  # [N, 1, H, W]
         masks_pred = model(X)
         mask = F.sigmoid(masks_pred[0, 0]).data.cpu().numpy()
         preds.append(mask)
