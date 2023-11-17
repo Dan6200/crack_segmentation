@@ -1,7 +1,7 @@
 import os
 from PIL import Image
 
-def is_grayscale(image_path):
+def convert_grayscale(image_path):
     img = Image.open(image_path).convert('RGB')
     img.save(image_path)
     w, h = img.size
@@ -18,8 +18,8 @@ def check_imgs_in_dir(input_dir):
     # Loop through all the images and check if they are grayscale
     for image_file in image_files:
         input_image_path = os.path.join(input_dir, image_file)
-        if is_grayscale(input_image_path):
-            print(f"{image_file} is grayscale")
+        if convert_grayscale(input_image_path):
+            print(f"{image_file} is grayscale. Converted")
         else:
             print(f"{image_file} is not grayscale")
 
